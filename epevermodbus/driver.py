@@ -299,9 +299,17 @@ class EpeverChargeController(minimalmodbus.Instrument):
         """Battery capacity in amp hours"""
         return self.retriable_read_register(0x9001, 0, 3)
 
+    def set_battery_capacity(self, capacity: int):
+        """Set Battery capacity in amp hours"""
+        return self.write_register(0x9001, capacity)
+
     def get_temperature_compensation_coefficient(self):
         """Temperature compensation coefficient"""
-        return self.retriable_read_register(0x9002, 0, 3)
+        return self.retriable_read_register(0x9002, 2, 3)
+
+    def set_temperature_compensation_coefficient(self, coefficient: float):
+        """Set the Temperature compensation coefficient"""
+        return self.write_register(0x9002, coefficient*100)
 
     def get_battery_voltage_control_registers(self):
         """Returns all 12 battery voltage control settings"""
